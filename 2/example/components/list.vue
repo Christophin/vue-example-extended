@@ -1,8 +1,9 @@
 <template>
   <section>
     <ul :style="{'list-style': listStyle}">
-      <li v-for="(item, index) in listItems">
-        {{ item.text }} - {{ item.time | dateFormat }}
+      <li v-for="(item, index) in listItems"
+          :style="{'color': toggleColor(index)}">
+        {{ index + 1 }}  {{ item.text }} - {{ item.time | dateFormat }}
       </li>
     </ul>
   </section>
@@ -16,7 +17,7 @@
     mixins: [Mixins],
     watch: {
       listItems (val) {
-        console.log('val', val)
+        console.log('val', this.listItems.index)
         if (val) {
           this.listStyle = 'inside'
         }
@@ -26,6 +27,15 @@
       return {
         listStyle: 'none',
         defaultListItems: []
+      }
+    },
+    methods: {
+      toggleColor (index) {
+        if (index % 2 === 0) {
+          return '#ff0000'
+        } else {
+          return '#0000ff'
+        }
       }
     },
     created () {
